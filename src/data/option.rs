@@ -44,9 +44,26 @@ mod option_test {
 
     #[test]
     fn test_option_monad() {
-        let o1 = Option::pure(1);
-        let o2 = Option::pure(2);
-        let actual = o1.bind(|o| o + o2);
-        assert_eq!(actual, Option::pure(3));
+        struct Employee {
+            name: String,
+            department: String,
+        }
+
+        fn lookup_by_name(name: &str) -> Option<Employee> {
+            Some(Employee {
+                name: name.to_string(),
+                department: "some_department".to_string(),
+            })
+        }
+
+        fn no_one_look_up(_name: &str) -> Option<Employee> {
+            None
+        }
+
+        let actual = lookup_by_name("joe").map(|employee| employee.department);
+        assert_eq!(actual, Some("some_department".to_string()));
+
+        let actual = no_one_look_up("joe").map(|employee| employee.department);
+        assert_eq!(actual, None);
     }
 }
