@@ -1,6 +1,3 @@
-#![feature(generic_associated_types)]
-#![allow(incomplete_features)]
-
 pub mod applicative;
 pub mod data;
 pub mod functor;
